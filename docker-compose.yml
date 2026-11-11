@@ -2,7 +2,7 @@
 # 镜像按清单列表（index）的摘要固定；官方镜像自带 mosquitto_pub/sub/passwd，健康检查和口令初始化都不用另起镜像。
 services:
   # 一次性服务：先于 broker 生成口令文件（health 是健康检查专用账号，主人账号给局域网设备和详情页显示）。
-  # mosquitto_passwd 不带 -c 时对已有用户改口令、没有的用户新增，重跑幂等；使用方账号由凭据签发命令加进同一文件。
+  # mosquitto_passwd 不带 -c 时对已有用户改口令、没有的用户新增，重跑幂等。
   init:
     image: eclipse-mosquitto:2.1.2-alpine@sha256:75d6662dee52c947dc9dd9c29f1d8d7ffef78ddaf38001caa09755681e8bbc98
     user: "1883:1883"
