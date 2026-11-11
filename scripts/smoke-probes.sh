@@ -2,8 +2,8 @@
 # smoke 的数据钩子：用一条保留消息当数据标记（挂在 wonton/smoke 主题上，随 mosquitto.db 持久化）。
 # 经 docker exec 进 broker 容器，用镜像里的 mosquitto_pub/sub 和 health 账号；没有网页和 MCP，那两项由套件记 N/A。
 
-_container() { # 本实例里 broker 服务的容器：按核心打的标签找，实例名没导出时按 SMOKE_BASE 推
-  local inst="${SMOKE_INSTANCE:-}" args=(--filter "label=wonton.plugin=$SMOKE_PLUGIN_ID" --filter "label=wonton.service=mosquitto")
+_container() { # 本实例里 broker 服务的容器：按服务名+实例标签找。钩子契约只有 SMOKE_STATE/JAR/WEB_URL/OWNER/BASE/TOKEN/INSTANCE
+  local inst="${SMOKE_INSTANCE:-}" args=(--filter "label=wonton.service=mosquitto")
   if [[ -z "$inst" && -n "${SMOKE_BASE:-}" ]]; then
     inst="${SMOKE_BASE#http://}"; inst="${inst%%.*}"
   fi
